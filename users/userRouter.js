@@ -99,7 +99,6 @@ function validateUserId(req, res, next) {
 };
 
 function validateUser(req, res, next) {
-  console.log(req.body)
   if (Object.keys(req.body).length === 0) {
     res.status(400).json({ message: 'missing user data' })
   }
@@ -111,7 +110,6 @@ function validateUser(req, res, next) {
 }
 
 function validatePost(req, res, next) {
-  console.log(req.body)
   if (Object.keys(req.body).length === 0) {
     res.status(400).json({ message: 'missing user data' })
   }
