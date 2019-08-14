@@ -16,13 +16,14 @@ router.post('/', validateUser,(req, res) => {
 });
 
 router.post('/:id/posts', validateUserId, validatePost, (req, res) => {
-  const postBody = { ...req.body, postedBy: req.user.name }
+  const postBody = { ...req.body, user_id: req.user.id }
 
   Posts.insert(postBody)
     .then(post => {
       res.status(200).json(post)
     })
-    .catch(() => {
+    .catch((err) => {
+      console.log(err)
       res.status(500).json({ errorMessage: 'Error adding the Post to the User.' })
     })
 });
