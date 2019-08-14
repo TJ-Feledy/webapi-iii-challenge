@@ -1,5 +1,6 @@
 const express = require('express');
 const userRouter = require('./users/userRouter.js')
+const colors = require('colors')
 
 const server = express();
 
@@ -17,7 +18,7 @@ server.get('/', (req, res) => {
 
 function logger(req, res, next) {
   const time = new Date()
-  console.log(`Sent ${req.method} request to ${req.url} at ${time}`)
+  console.log(`Sent` + ` ${req.method}`.bold.magenta + ` request to` + ` '${req.url}'`.yellow + ` on` + ` ${time}`.green)
   next()
 };
 
