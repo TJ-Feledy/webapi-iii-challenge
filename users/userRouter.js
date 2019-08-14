@@ -51,7 +51,7 @@ router.get('/:id/posts', validateUserId, (req, res) => {
     })
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', validateUserId, (req, res) => {
   const { id } = req.params
 
   Users.remove(id)
@@ -67,8 +67,14 @@ router.delete('/:id', (req, res) => {
     })
 });
 
-router.put('/:id', (req, res) => {
-
+router.put('/:id', validateUserId, validateUser, (req, res) => {
+  Users.update(req.user.id, req.body)
+    .then(user => {
+      res.status(200).json(user)
+    })
+    .catch(() => {
+      res.status(500).json({ errorMessage: 'Error updating User.' })
+    })
 });
 
 //custom middleware
@@ -92,6 +98,7 @@ function validateUserId(req, res, next) {
 };
 
 function validateUser(req, res, next) {
+  console.log(req.body)
   if (Object.keys(req.body).length === 0) {
     res.status(400).json({ message: 'missing user data' })
   }
