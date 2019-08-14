@@ -19,7 +19,7 @@ server.get('/', (req, res) => {
 function logger(req, res, next) {
   const date = new Date().toDateString()
   const time = new Date().toLocaleTimeString()
-  console.log(`Sent ` + `${req.method}`.bold.underline.magenta + ` request to` + ` '${req.url}'`.bold.yellow + ` on` + ` ${date}`.green + ` at ` + `${time}`.green)
+  console.log(`Sent a ` + `${req.method}`.bold.underline.magenta + ` request to` + ` '${req.url}'`.bold.yellow + ` on` + ` ${date}`.green + ` at ` + `${time}`.green)
   next()
 };
 

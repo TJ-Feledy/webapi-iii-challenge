@@ -16,7 +16,7 @@ router.post('/', validateUser,(req, res) => {
 });
 
 router.post('/:id/posts', validateUserId, validatePost, (req, res) => {
-  const postBody = { ...req.body, user_id: req.params.id }
+  const postBody = { ...req.body, postedBy: req.user.name }
 
   Posts.insert(postBody)
     .then(post => {
@@ -41,8 +41,14 @@ router.get('/:id', validateUserId, (req, res) => {
   res.status(200).json(req.user)
 });
 
-router.get('/:id/posts', (req, res) => {
-
+router.get('/:id/posts', validateUserId, (req, res) => {
+  Users.getUserPosts(req.user.id)
+    .then(posts => {
+      res.status(200).json(posts)
+    })
+    .catch(() => {
+      res.status(500).json({ errorMessage: 'Error getting User posts' })
+    })
 });
 
 router.delete('/:id', (req, res) => {
