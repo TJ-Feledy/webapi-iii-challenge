@@ -17,8 +17,9 @@ server.get('/', (req, res) => {
 //custom middleware
 
 function logger(req, res, next) {
-  const time = new Date()
-  console.log(`Sent` + ` ${req.method}`.bold.magenta + ` request to` + ` '${req.url}'`.yellow + ` on` + ` ${time}`.green)
+  const date = new Date().toDateString()
+  const time = new Date().toLocaleTimeString()
+  console.log(`Sent ` + `${req.method}`.bold.underline.magenta + ` request to` + ` '${req.url}'`.bold.yellow + ` on` + ` ${date}`.green + ` at ` + `${time}`.green)
   next()
 };
 
