@@ -52,7 +52,19 @@ router.get('/:id/posts', validateUserId, (req, res) => {
 });
 
 router.delete('/:id', (req, res) => {
+  const { id } = req.params
 
+  Users.remove(id)
+    .then(user => {
+      if (user === 0) {
+        res.status(404).json({ message: 'User ID is invalid.' })
+      }else {
+        res.status(200).json(user)
+      }
+    })
+    .catch(() => {
+      res.status(500).json({ errorMessage: 'Error removing the User.' })
+    })
 });
 
 router.put('/:id', (req, res) => {
