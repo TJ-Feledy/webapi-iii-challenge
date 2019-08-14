@@ -28,11 +28,17 @@ router.post('/:id/posts', validateUserId, validatePost, (req, res) => {
 });
 
 router.get('/', (req, res) => {
-
+  Users.get()
+    .then(users => {
+      res.status(200).json(users)
+    })
+    .catch(() => {
+      res.status(500).json({ errorMessage: 'Error getting Users' })
+    })
 });
 
-router.get('/:id', (req, res) => {
-
+router.get('/:id', validateUserId, (req, res) => {
+  res.status(200).json(req.user)
 });
 
 router.get('/:id/posts', (req, res) => {
@@ -55,7 +61,7 @@ function validateUserId(req, res, next) {
   Users.getById(id)
     .then(user => {
       if (user) {
-        user = req.user
+        req.user = user
         next()
       }else {
         res.status(400).json({ message: 'invalid user id' })
